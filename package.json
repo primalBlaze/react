@@ -8,7 +8,7 @@
     "clean": "rimraf lib",
     "pretest": "npm run clean && npm run transpile",
     "test": "mocha -u exports -R nyan --require ./test/babel test",
-    "transpile": "babel src --out-dir lib --stage 0"
+    "transpile": "babel src --out-dir lib --presets=react,stage-2"
   },
   "repository": {
     "type": "git",
@@ -32,9 +32,13 @@
   },
   "homepage": "https://github.com/altjs/react",
   "devDependencies": {
-    "alt": "0.17.4",
-    "babel": "5.8.23",
-    "babel-core": "5.8.25",
+    "alt": "https://github.com/primalBlaze/alt.git#cdf2e771",
+    "babel-cli": "6.26.0",
+    "babel-core": "6.26.0",
+    "babel-plugin-external-helpers": "6.22.0",
+    "babel-preset-env": "1.6.1",
+    "babel-preset-react": "6.24.1",
+    "babel-preset-stage-2": "6.24.1",
     "chai": "3.3.0",
     "jsdom": "7.0.1",
     "mocha": "2.3.3",
