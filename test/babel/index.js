@@ -1,4 +1,4 @@
-require('babel-core/external-helpers')
-require('babel/register-without-polyfill')({
-  stage: 0
+require('babel-plugin-external-helpers')
+require('babel-core/register')({
+  presets: ['react', 'stage-2', 'env']
 })

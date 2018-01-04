@@ -1,12 +1,14 @@
 import { jsdom } from 'jsdom'
 import Alt from 'alt'
+import createClass from "create-react-class";
 import React from 'react'
 import ReactDom from 'react-dom'
 import ReactDomServer from 'react-dom/server'
-import connectToStores from '../'
+import PropTypes from 'prop-types'
+import connectToStores from '../connect'
 import { assert } from 'chai'
 import sinon from 'sinon'
-import TestUtils from 'react-addons-test-utils'
+import TestUtils from 'react-dom/test-utils'
 
 const alt = new Alt()
 
@@ -45,7 +47,7 @@ export default {
 
       const getProps = sinon.stub().returns(FooStore.getState())
 
-      const Child = connectToStores(React.createClass({
+      const Child = connectToStores(createClass({
         render() {
           return <span>{this.props.x + this.props.y}</span>
         }
@@ -57,7 +59,7 @@ export default {
         getProps
       })
 
-      const Parent = React.createClass({
+      const Parent = createClass({
         getInitialState() {
           return { y: 0 }
         },
@@ -82,7 +84,7 @@ export default {
     'element mounts and unmounts'() {
       const div = document.createElement('div')
 
-      const LegacyComponent = connectToStores(React.createClass({
+      const LegacyComponent = connectToStores(createClass({
         render() {
           return React.createElement('div', null, `Foo${this.props.delim}${this.props.foo}`)
         }
@@ -103,7 +105,7 @@ export default {
     },
 
     'createClass() component can get props from stores'() {
-      const LegacyComponent = React.createClass({
+      const LegacyComponent = createClass({
         render() {
           return React.createElement('div', null, `Foo${this.props.delim}${this.props.foo}`)
         }
@@ -123,9 +125,9 @@ export default {
     },
 
     'component statics can see context properties'() {
-      const Child = connectToStores(React.createClass({
+      const Child = connectToStores(createClass({
         contextTypes: {
-          store: React.PropTypes.object
+          store: PropTypes.object
         },
         render() {
           return <span>Foo: {this.props.foo}</span>
@@ -139,12 +141,12 @@ export default {
         },
       })
 
-      const ContextComponent = React.createClass({
+      const ContextComponent = createClass({
         getChildContext() {
           return { store: testStore }
         },
         childContextTypes: {
-          store: React.PropTypes.object
+          store: PropTypes.object
         },
         render() {
           return <Child />
@@ -156,7 +158,7 @@ export default {
     },
 
     'component can get use stores from props'() {
-      const LegacyComponent = React.createClass({
+      const LegacyComponent = createClass({
         render() {
           return React.createElement('div', null, `Foo${this.props.delim}${this.props.foo}`)
         }

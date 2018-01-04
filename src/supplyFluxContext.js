@@ -1,8 +1,9 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 export default flux => Component => React.createClass({
   childContextTypes: {
-    flux: React.PropTypes.object,
+    flux: PropTypes.object,
   },
 
   getChildContext() {
